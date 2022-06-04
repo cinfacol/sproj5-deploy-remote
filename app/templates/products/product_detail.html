@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+
+{% load i18n %}
+{% block head_title %}
+
+  {{ object.name }} {% if user.is_authenticated %} - {{ user.username }} {% endif %}
+{% endblock head_title %}
+
+{% block content %}
+  <main class="mt-5 pt-4">
+    <div class="container dark-grey-text mt-5">
+      <div class="row d-flex justify-content-center wow fadeIn">
+        <div class="card h-100 mb-3 ml-10" style="">
+          <div class="row g-0">
+            <div class="col-md-5 d-flex justify-content-end">
+              <img
+                src=""
+                alt=""
+                class="img-fluid"
+              />
+            </div>
+            <div class="col-md-7 d-flex align-self-center">
+              <div class="card-body">
+                <div class="mb-3 mx-4">
+                  <a href="">
+                    <span class="badge  bg-warning mr-1">{{ object.get_categories }}</span>
+                    <span class="badge  bg-{{ item.get_label_display }} bg-danger">{% translate "NEW" %}</span>
+                  </a>
+                  <p class="lead">
+                    {% if object.discount_price %}
+                    <span class="me-3">
+                      <del>${{ object.store_price|intcomma }}</del>
+                    </span>
+                    <span>${{ object.discount_price|intcomma }}</span>
+                    {% else %}
+                    <span>${{ object.store_price|intcomma }}</span>
+                    {% endif %}
+                  </p>
+
+                  <h5 class="card-title">{% translate "Description" %}</h5>
+                  <p class="card-text">
+                    {{ object.description }}
+                  </p>
+                  <form  method="POST">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+
+                    <a href="{{ object.get_add_to_cart_url }}" class="btn btn-primary btn-md my-0 p">
+                      {% translate "Add to cart" %}
+                      <i class="fas fa-shopping-cart ml-1"></i>
+                    </a>
+                    <a href="{{ object.get_remove_from_cart_url }}" class="btn btn-danger btn-md my-0 p">
+                      {% translate "Remove from cart" %}
+                    </a>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <!--Grid row-->
+      <div class="row d-flex justify-content-center wow fadeIn">
+
+        <!--Grid column-->
+        <div class="col-md-6 text-center">
+
+          <h4 class="my-4 h4">Additional information</h4>
+
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus suscipit modi sapiente illo soluta odit
+            voluptates,
+            quibusdam officia. Neque quibusdam quas a quis porro? Molestias illo neque eum in laborum.</p>
+
+        </div>
+        <!--Grid column-->
+
+      </div>
+      <!--Grid row-->
+
+      <!--Grid row-->
+      <div class="row wow fadeIn">
+
+        <!--Grid column-->
+        <div class="col-lg-4 col-md-12 mb-4">
+
+          <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/11.jpg" class="img-fluid" alt="">
+
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-lg-4 col-md-6 mb-4">
+
+          <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/12.jpg" class="img-fluid" alt="">
+
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-lg-4 col-md-6 mb-4">
+
+          <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/13.jpg" class="img-fluid" alt="">
+
+        </div>
+        <!--Grid column-->
+
+      </div>
+      <!--Grid row-->
+
+    </div>
+  </main>
+{% endblock content %}

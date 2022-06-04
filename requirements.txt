@@ -1,0 +1,12 @@
+autopep8==1.6.0
+crispy-bootstrap5==0.6
+Django==4.0.4
+django-allauth==0.47.0
+django-betterforms==1.2
+django-choices==1.7.2
+django-countries==7.2.1
+django-crispy-forms==1.13.0
+django-mptt==0.13.4
+Pillow==9.1.1
+psycopg2==2.9.3
+uWSGI==2.0.20

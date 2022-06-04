@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block head_title %}
+  {% translate "Edit Profile" %} - {{ profile.user.username }}
+{% endblock head_title %}
+
+{% block content %}
+  <style>
+    .account-form input {
+        border: 2px solid #ccc;
+        height: calc(2em + .75rem + 2px);
+    }
+
+    .account-form input:focus {
+        border-color: #1497ff;
+        box-shadow: none;
+    }
+  </style>
+
+
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-lg-7  mx-auto">
+
+        <form class="account-form px-4 pt-4" method="post" enctype="multipart/form-data">
+
+          {% if profile_form.is_valid %}
+            <div class="alert alert-primary" role="alert">
+              Profile successfully updated!
+            </div>
+            <p class="small text-center pt-0">
+              <a href="{% url "perfiles:perfil" user.username %}">Back to Profile</a>
+            </p>
+          {%else%}
+            <h3>Change your details</h3>
+            <p>You can edit your account using the following form:</p>
+          {% endif %}
+
+          {% if profile_form.errors %}
+            <div class="alert alert-primary" role="alert">
+              {% for field in profile_forms %}
+                {% for error in field.errors %}
+                  {{ error|escape }}
+                {% endfor %}
+              {% endfor %}
+              {% for error in profile_form.non_field_errors %}
+                {{ error|escape }}
+              {% endfor %}
+              Error: Please try again!
+            </div>
+          {% endif %}
+
+          {% csrf_token %}
+          <label class="small font-weight-bold">{{ user_form.email.label }}</label>
+          {{ user_form.email }}
+          <label class="small font-weight-bold">{{ user_form.username.label }}</label>
+          {{ user_form.username }}
+          <label class="small font-weight-bold">{{ user_form.first_name.label }}</label>
+          {{ user_form.first_name }}
+          <label class="small font-weight-bold">{{ user_form.last_name.label }}</label>
+          {{ user_form.last_name }}
+
+          <label class="small font-weight-bold">{{ profile_form.picture.label }}</label>
+          {{ profile_form.picture }}
+          <label class="small font-weight-bold">{{ profile_form.banner.label }}</label>
+          {{ profile_form.banner }}
+          <label class="small font-weight-bold">{{ profile_form.url.label }}</label>
+          {{ profile_form.url }}
+         <label class="small font-weight-bold">{{ profile_form.birthday.label }}</label>
+          {{ profile_form.birthday }}
+          <label class="small font-weight-bold">{{ profile_form.gender.label }}</label>
+          {{ profile_form.gender }}
+          <label class="small font-weight-bold">{{ profile_form.bio.label }}</label>
+          {{ profile_form.bio }}
+          <label class="small font-weight-bold">{{ profile_form.phone.label }}</label>
+          {{ profile_form.phone }}
+          <label class="small font-weight-bold">{{ profile_form.mobile.label }}</label>
+          {{ profile_form.mobile }}
+
+          <input id='form-button' class="btn btn-primary btn-block py-2 mb-4 mt-5 fw-bold w-100" type="submit"
+              value="Guardar Cambios"></input>
+          <hr class="mb-3">
+        </form>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

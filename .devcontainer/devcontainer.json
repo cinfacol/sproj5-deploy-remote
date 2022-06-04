@@ -1,0 +1,37 @@
+{
+	"name": "sproj5-deploy-remote",
+	"dockerComposeFile": [
+		"../docker-compose.yml",
+		"docker-compose.yml"
+	],
+	"service": "app",
+	"workspaceFolder": "/app",
+	// Set *default* container specific settings.json values on container create.
+	"settings": {
+		"editor.formatOnSave": true,
+		"workbench.colorTheme": "Cobalt2",
+		"python.formatting.provider": "black",
+		"python.linting.enabled": true,
+		"python.linting.pylintEnabled": true,
+		"python.linting.pylintUseMinimalCheckers": true,
+		"python.formatting.blackPath": "/usr/local/bin/black",
+		"python.linting.flake8Enabled": true,
+		"python.linting.flake8Path": "/usr/local/bin/flake8",
+		"python.defaultInterpreterPath": "/usr/local/bin/python"
+	},
+	// Add the IDs of extensions you want installed when the container is created.
+	"extensions": [
+		"ms-python.python",
+		"ms-python.vscode-pylance",
+		"esbenp.prettier-vscode",
+		"wesbos.theme-cobalt2",
+		"eamodio.gitlens"
+	],
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// This can be used to network with other containers or the host.
+	// "forwardPorts": [5000, 5432],
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "pip install --user -r requirements.txt",
+	// Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+	"remoteUser": "root"
+}

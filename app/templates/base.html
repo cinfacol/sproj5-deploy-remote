@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+
+    <!-- Majestic style from Bootstrap5 -->
+    <link rel="stylesheet" href="{% static 'css/theme.min.css' %}" />
+    <!--  Bootstrap5 -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+    <!-- MDB icon -->
+    <link rel="icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{% static 'css/all.min.css' %}" />
+    <!-- custom css styles-->
+    <link rel="stylesheet" href="{% static 'css/user.css' %}" />
+    <!-- Google Fonts Roboto -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
+    />
+    <!-- MDB -->
+    <link rel="stylesheet" href="{% static 'css/mdb.min.css' %}" />
+    <title>
+    {% block head_title %}sproj4{% endblock head_title %}
+    </title>
+    {% block extra_head %}{% endblock extra_head %}
+  </head>
+  <header>
+  {% include 'top_nav.html' %}
+  {% include 'middle_nav.html'%}
+  </header>
+  <body>
+    <main style="background-color:#ebebeb;">
+      {% block content %}
+      {% endblock content %}
+    </main>
+
+    {% include 'footer.html' %}
+
+    <!-- MDB -->
+    <script type="text/javascript" src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/mdb.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/feather.min.js' %}"></script>
+
+    {% block scripts %}{% endblock scripts %}
+
+    <!-- Custom scripts -->
+    <script type="text/javascript">
+      feather.replace();
+    </script>
+  </body>
+</html>

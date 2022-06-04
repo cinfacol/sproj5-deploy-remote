@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}
+  CheckOut
+{% endblock head_title %}
+
+{% block content %}
+	<div class="bg-light py-3">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 mb-0">
+					<a href="/">Home</a><span class="mx-2 mb-0">/</span>
+					<a href="{% url 'cart:cart_detail' %}">Cart</a><span class="mx-2 mb-0">/</span>
+					<strong class="text-block">CheckOut</strong>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container py-3">
+		<div class="row">
+			<div class="col-md-6 mb-md-0">
+				<h2 class="h3 mb-3 text-black text-center">dirección de envío</h2>
+				<hr />
+				<div>
+					{% for address in addresses %}
+						{% if address.default %}
+							<div class="col-12">
+								<div class="card">
+									<div class="card-body small mx-5 pb-1">
+										<dl class="row">
+											<dt class="col-sm-4">Residencia:</dt>
+											<dd class="col-sm-8">
+												{{address.shipping_address}}
+											</dd>
+											{% if address.billing_address %}
+												<dt class="col-sm-4">Oficina:</dt>
+												<dd class="col-sm-8">
+													{{address.billing_address}}
+												</dd>
+											{% endif %}
+											<dt class="col-sm-4">Ciudad:</dt>
+											<dd class="col-sm-8">
+												{{address.ciudad}}
+											</dd>
+											<dt class="col-sm-4">Departamento:</dt>
+											<dd class="col-sm-8">
+												{{address.departamento}}
+											</dd>
+											<dt class="col-sm-4">Zip code:</dt>
+											<dd class="col-sm-8">
+												{{address.zip}}
+											</dd>
+										</dl>
+									</div>
+								</div>
+							</div>
+						{% endif %}
+					{% empty %}
+						<div class="text-center">
+							<p class="text-danger">Aún no has configurado una dirección de envío por defecto, click en el siguente enlace <br/><a href="{% url 'perfiles:direcciones' %}" type="button">configurar direccion de envío</a><br/> y agrega una dirección de envío</p>
+						</div>
+					{% endfor %}
+				</div>
+				<div class="p-3 p-lg-4">
+					<a href="{% url 'cart:cart_detail' %}" class="btn btn-warning btn-lg" tabindex="-1" role="button">
+						Regresar al Carrito
+					</a>
+					{% if addr_default %}
+						<a href="{% url 'cart:payment' %}" class="btn btn-success btn-lg" tabindex="-1" role="button">
+							Continuar con el Pago
+						</a>
+					{% else %}
+						<a class="btn btn-primary btn-lg disabled" tabindex="-1" role="button">
+							Continuar con el Pago
+						</a>
+					{% endif %}
+				</div>
+				<div class="p-2 p-lg-2">
+					<a href="{% url 'perfiles:direcciones' %}">cambiar o agregar dirección de envío por defecto</a>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="row">
+					<div class="col-md-12">
+						<h2 class="h3 mb-3 text-black text-center">Detalle del pedido</h2>
+						<hr>
+						<div class="p-2 p-lg-3">
+							<table class="table site-block-order-table">
+								<thead>
+									<th>Product</th>
+									<th>Total</th>
+								</thead>
+								<tbody>
+									{% for item in order.items.all %}
+										<tr>
+											<td>
+												{{ item.product.title }}
+												<strong class="mx-2">x</strong> {{ item.quantity }}
+											</td>
+											<td>
+												$ {{ item.get_total_item_price|intcomma }}
+											</td>
+										</tr>
+									{% endfor %}
+										<tr class="total">
+											<th>Subtotal</th>
+											<th>$ {{ order.get_subtotal|intcomma }}</th>
+										</tr>
+										<tr class="total">
+											<th>Impuesto (IVA 16%)</th>
+											<th>$ {{ order.get_impuesto|intcomma }}</th>
+										</tr>
+										<tr class="total">
+											<th><strong>Order Total</strong></th>
+											<th>$ {{ order.get_total|intcomma }}</th>
+										</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div> <!-- /row -->
+	</div> <!-- /container -->
+{% endblock content %}

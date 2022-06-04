@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+
+{% load i18n %}
+{% block head_title %}
+
+  {{ post.product.name }}
+  {% if user.is_authenticated %}
+    - {{ user.username }}
+  {% endif %}
+{% endblock head_title %}
+
+{% block content %}
+  <div class="container dark-grey-text pt-3">
+    <div class="row d-flex justify-content-center wow fadeIn">
+      <div class="card ml-10" style="">
+        <div class="row g-0">
+          <div class="col-md-5 d-flex justify-content-end">
+            <img
+              src="{{post.img.url}}"
+              alt="{{post.alt_text}}"
+              class="img-fluid"
+            />
+          </div>
+          <div class="col-md-7 d-flex align-self-center">
+            <div class="card-body">
+              <div class="mx-4">
+                <a href="#">
+                  <span class="badge  bg-warning mr-1">
+                    {% for category in post.product.category.all %}
+                        {{ category }}
+                    {% endfor %}
+                  </span>
+                  <span class="badge  bg-{{ item.get_label_display }} bg-danger">
+                    {% translate "NEW" %}
+                  </span>
+                </a>
+                <p class="lead">
+                  {% if post.product.discount_price %}
+                  <span class="me-3">
+                    <del>${{ post.product.store_price|intcomma }}</del>
+                  </span>
+                  <span>${{ post.product.discount_price|intcomma }}</span>
+                  {% else %}
+                  <span>${{ post.product.store_price|intcomma }}</span>
+                  {% endif %}
+                </p>
+
+                <h5 class="card-title">{% translate "Description" %}</h5>
+                <p class="card-text">
+                  {{ post.product.description }}
+                </p>
+                {% comment %} <form action="{% url 'cart:cart_add' post.id %}" method="POST"> {% endcomment %}
+                <form action="" method="POST">
+                  {% csrf_token %}
+                  {{ form|crispy }}
+                  {% comment %} {{ cart_product_form|crispy }} {% endcomment %}
+                  <input type="submit" class="btn btn-primary btn-md my-0 p" value="{% translate "Agregar al carrito" %}">
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="row d-flex justify-content-center wow fadeIn">
+      <div class="col-md-6 text-center">
+        <h4 class="my-4 h4">Additional information</h4>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus suscipit modi sapiente illo soluta odit
+          voluptates,
+          quibusdam officia. Neque quibusdam quas a quis porro? Molestias illo neque eum in laborum.</p>
+      </div>
+    </div>
+    <div class="row">
+      {% for image in images %}
+        <div class="col-md-6 col-lg-4 mb-4">
+          <div class="card-group h-100">
+            <div class="card">
+              <img src="{{ image.image.url }}" class="card-img-top" alt="{{ image.alt_text }}">
+              <div class="card-body">
+                <h5 class="card-title">{{ image.product.name }}</h5>
+                <p class="card-text">{{ image.product.description }}</p>
+                <p class="card-text"><small class="text-muted">{{ image.product.brand }}</small></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        {% comment %} <div class="col-lg-4 col-md-12 mb-4">
+          <div class="card h-100">
+            <img src="{{ image.image.url }}" class="img-fluid" alt="{{ image.alt_text }}">
+          </div>
+        </div> {% endcomment %}
+      {% endfor %}
+    </div>
+  </div>
+{% endblock content %}

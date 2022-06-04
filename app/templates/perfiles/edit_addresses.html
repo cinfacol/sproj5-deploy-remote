@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block head_title %}Crear-Editar dirección{% endblock %}
+
+{% block content %}
+<div class="container py-3">
+      <form name="address_form" class="account-form" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+          <div class="col-8 mx-auto">
+            <h1 class="h3">Crear/Editar Dirección</h1>
+            <div>Agregue o edite una <b>dirección</b> de envío</div>
+            <hr />
+            {% if form.errors %}
+              <div class="alert alert-primary" role="alert">
+                Error: Por favor trate nuevamente!
+              </div>
+            {% endif %}
+            <div class="mb-3">
+              <label for="direccionResidencia" class="form-label">{{ form.shipping_address.label}}</label>
+                {{ form.shipping_address }}
+            </div>
+            <div class="mb-3">
+              <label class="form-label">{{ form.billing_address.label}}</label>
+                {{ form.billing_address }}
+            </div>
+            <div class="mb-3">
+              <label class="form-label">{{ form.ciudad.label}}</label>
+              {{ form.ciudad }}
+            </div>
+            <div class="mb-3">
+              <label class="form-label">{{ form.departamento.label}}</label>
+              {{ form.departamento }}
+            </div>
+            <div class="mb-3">
+              <label class="form-label">{{ form.zip.label}}</label>
+              {{ form.zip }}
+            </div>
+            <button class="btn btn-primary btn-block py-2 mb-4 mt-4 fw-bold w-100" type="button" value="Submit" onclick="submitForm()">
+            Agregar dirección
+            </button>
+          </div>
+        </div>
+      </form>
+</div>
+
+<script>
+function submitForm() {
+   var form = document.getElementsByName('address_form')[0];
+   form.submit(); // Submit the form
+   form.reset();  // Reset all form data
+   return false; // Prevent page refresh
+}
+</script>
+{% endblock %}
